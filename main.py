@@ -34,7 +34,7 @@ def main():
     for t in range(0, timesteps):
         removeImpossible(t)
         for vehicle in vehicles:
-            if !(vehicle.t_free > t):
+            if (vehicle.t_free <= t):
                 ride_index = pickRide(vehicle.position, t)
                 vehicle.rides_started.append(ride_index)
                 vehicle.t_free = t + calcDistance(pos,rides[ride_index].s_position) + max(0, rides[ride_index].earliest_start - (t + calcDistance(pos,rides[ride_index].s_position))) + rides[ride_index].distance
