@@ -75,8 +75,7 @@ def pickRide(pos, t): # Position vom Auto
     min_index = -1
 
     for i in range(len(rides)):
-        d = rides[i].latest_finish-rides[i].distance-calcDistance(pos,rides[i].s_position)
-
+        d = calcDistance(pos,rides[i].s_position) + max(0, rides[i].earliest_start - (t + calcDistance(pos,rides[i].s_position))) + rides[i].distance#rides[i].latest_finish-rides[i].distance-calcDistance(pos,rides[i].s_position)
         if d < min_d and rides[i].valid:
             min_d = d
             min_index = i
