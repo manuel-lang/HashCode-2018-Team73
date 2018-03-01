@@ -8,10 +8,12 @@ num_rides = 0
 bonus = 0
 timesteps = 0
 
+rides = []
+_vehicles = []
+
 def read_input():
     with open('data/a_example.in', 'r') as file:
         content = file.readlines()
-        rides = []
         for idx, line in enumerate(content):
             line.rstrip()
 
@@ -32,48 +34,42 @@ def read_input():
                 timesteps = int(values[5])
             else:
                 rides.append(Ride(idx, (int(values[0]), int(values[1])), (int(values[2]), int(values[3])), int(values[4]), int(values[5])))
-        return rides
 
-def write_output(vehicles):
+def write_output():
     with open('output.txt', 'w') as file:
-        for vehicle in vehicles:
+        for vehicle in _vehicles:
             line = str(len(vehicle.rides_started))
             for ride_index in range(len(vehicle.rides_started)):
                 line += " " + str(vehicle.rides_started[ride_index])
-            line += "\n"
-            file.write(line)
-    file.close()
-
-rides = read_input()
-vehicles = []
+            file.write(line + "\n")
 
 def main():
+    read_input()
     generateVehicles()
     for t in range(timesteps):
         removeImpossible(t)
-        for vehicle in vehicles:
-            if (vehicle.t_free <= t):
-                ride_index = pickRide(vehicle.position, t)
+        for _vehicle in _vehicles:
+            if (_vehicle.t_free <= t):
+                ride_index = pickRide(_vehicle.position, t)
                 if ride_index != -1:
-                    vehicle.rides_started.append(ride_index)
-                    vehicle.t_free = t + calcDistance(vehicle.position,rides[ride_index].s_position) + max(0, rides[ride_index].earliest_start - (t + calcDistance(vehicle.position,rides[ride_index].s_position))) + rides[ride_index].distance
+                    _vehicle.rides_started.append(ride_index)
+                    _vehicle.t_free = t + calcDistance(_vehicle.position,rides[ride_index].s_position) + max(0, rides[ride_index].earliest_start - (t + calcDistance(_vehicle.position,rides[ride_index].s_position))) + rides[ride_index].distance
                     rides[ride_index].valid = False
-                    vehicle.position = rides[ride_index].t_position
-    write_output(vehicles)
+    write_output()
 
 def generateVehicles():
     for i in range(num_vehicles):
-        vehicles.append(Auto(index = i))
+        _vehicles.append(Auto(i))
 
 def removeImpossible(t):
     for i in range(len(rides)):
         if(rides[i].latest_finish-rides[i].distance < t):
             rides[i].valid = False
 
-def calcDistance(pos1,pos2):
+def calcDistance(pos1, pos2):
     return abs(pos1[0]-pos2[0])+abs(pos1[1]-pos2[1])
 
-def pickRide(pos,t): # Position vom Auto
+def pickRide(pos, t): # Position vom Auto
 
     min_d = 99999999999
     min_index = -1

@@ -4,4 +4,4 @@ class Auto:
         self.is_driving = is_driving
         self.index = index
         self.t_free = t_free
-        self.rides_started = rides_started
+        self.rides_started = []
