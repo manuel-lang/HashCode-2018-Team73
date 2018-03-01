@@ -4,6 +4,6 @@ class Ride:
         self.valid = True
         self.s_position = start_position
         self.t_position = target_position
-        self.distance = (target_position[1] - start_position[1]) + (target_position[0] - target_position[0])
+        self.distance = abs(target_position[1] - start_position[1]) + abs(target_position[0] - start_position[0])
         self.earliest_start = earliest_start
         self.latest_finish = latest_finish
