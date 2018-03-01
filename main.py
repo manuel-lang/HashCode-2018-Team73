@@ -12,7 +12,7 @@ rides = []
 _vehicles = []
 
 def read_input():
-    with open('data/a_example.in', 'r') as file:
+    with open('data/d_metropolis.in', 'r') as file:
         content = file.readlines()
         for idx, line in enumerate(content):
             line.rstrip()
