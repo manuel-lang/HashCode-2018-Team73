@@ -1,4 +1,4 @@
-import auto
+from auto import Auto
 from ride import Ride
 
 num_rows = 0;
@@ -37,7 +37,7 @@ def main():
             if (vehicle.t_free <= t):
                 ride_index = pickRide(vehicle.position, t)
                 vehicle.rides_started.append(ride_index)
-                vehicle.t_free = t + calcDistance(pos,rides[ride_index].s_position) + max(0, rides[ride_index].earliest_start - (t + calcDistance(pos,rides[ride_index].s_position))) + rides[ride_index].distance
+                vehicle.t_free = t + calcDistance(vehicle.position,rides[ride_index].s_position) + max(0, rides[ride_index].earliest_start - (t + calcDistance(vehicle.position,rides[ride_index].s_position))) + rides[ride_index].distance
                 rides[ride_index].valid = False
                 
 
@@ -67,5 +67,5 @@ def pickRide(pos,t): # Position vom Auto
 
     return min_index
 
-if __name__ == "__main__":
+if __name__ == "_main_":
     main()
