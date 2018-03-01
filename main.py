@@ -29,3 +29,6 @@ def read_input():
 
 def main():
     rides = read_input()
+
+if __name__ == "__main__":
+    main()
