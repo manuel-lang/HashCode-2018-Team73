@@ -54,9 +54,11 @@ def main():
         for vehicle in vehicles:
             if (vehicle.t_free <= t):
                 ride_index = pickRide(vehicle.position, t)
-                vehicle.rides_started.append(ride_index)
-                vehicle.t_free = t + calcDistance(vehicle.position,rides[ride_index].s_position) + max(0, rides[ride_index].earliest_start - (t + calcDistance(vehicle.position,rides[ride_index].s_position))) + rides[ride_index].distance
-                rides[ride_index].valid = False
+                if ride_index != -1:
+                    vehicle.rides_started.append(ride_index)
+                    vehicle.t_free = t + calcDistance(vehicle.position,rides[ride_index].s_position) + max(0, rides[ride_index].earliest_start - (t + calcDistance(vehicle.position,rides[ride_index].s_position))) + rides[ride_index].distance
+                    rides[ride_index].valid = False
+                    vehicle.position = rides[ride_index].t_position
     write_output(vehicles)
 
 def generateVehicles():
