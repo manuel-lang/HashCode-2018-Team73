@@ -1,6 +1,6 @@
-from auto import Auto
 from ride import Ride
 from sys import argv
+from vehicle import Vehicle
 
 def write_output(vehicles):
     with open('output.txt', 'w') as file:
@@ -10,7 +10,7 @@ def write_output(vehicles):
 def generateVehicles(numvehicles):
     vehicles = []
     for i in range(numvehicles):
-        vehicles.append(Auto(i))
+        vehicles.append(Vehicle(i))
     return vehicles
 
 def removeImpossible(rides, t):
@@ -21,11 +21,11 @@ def removeImpossible(rides, t):
 def calcDistance(pos1, pos2):
     return abs(pos1[0]-pos2[0]) + abs(pos1[1]-pos2[1])
 
-def pickRide(rides, pos, t): # Position vom Auto
+def pickRide(rides, pos, t): # Vehicle position
     min_d = 99999999999
     min_index = -1
     for i in range(len(rides)):
-        d = calcDistance(pos,rides[i].s_position) + max(0, rides[i].earliest_start - (t + calcDistance(pos,rides[i].s_position))) + rides[i].distance#rides[i].latest_finish-rides[i].distance-calcDistance(pos,rides[i].s_position)
+        d = calcDistance(pos,rides[i].s_position) + max(0, rides[i].earliest_start - (t + calcDistance(pos,rides[i].s_position))) + rides[i].distance
         if d < min_d and rides[i].valid:
             min_d = d
             min_index = i
@@ -40,14 +40,12 @@ def main():
     with open(filename, 'r') as file:
         content = file.readlines()
         for idx, line in enumerate(content):
-            line.rstrip()
-            values = line.split(' ')
+            values = [int(x) for x in line.rstrip().split(" ")]
             if idx == 0:
-                numvehicles = int(values[2])
-                timesteps = int(values[5])
+                numvehicles = values[2]
+                timesteps = values[5]
             else:
-                rides.append(Ride(idx, (int(values[0]), int(values[1])), (int(values[2]), int(values[3])), int(values[4]), int(values[5])))
-
+                rides.append(Ride(idx, (values[0], values[1]), (values[2], values[3]), values[4], values[5]))
     vehicles = generateVehicles(numvehicles)
     for t in range(timesteps):
         removeImpossible(rides, t)

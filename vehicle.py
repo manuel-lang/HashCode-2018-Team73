@@ -1,4 +1,4 @@
-class Auto:
+class Vehicle:
     def __init__(self, index, position=(0,0), is_driving = False, t_free = 0):
         self.position = position
         self.is_driving = is_driving
