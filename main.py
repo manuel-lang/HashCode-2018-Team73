@@ -5,10 +5,7 @@ from sys import argv
 def write_output(vehicles):
     with open('output.txt', 'w') as file:
         for vehicle in vehicles:
-            line = str(len(vehicle.rides_started))
-            for ride_index in range(len(vehicle.rides_started)):
-                line += " " + str(vehicle.rides_started[ride_index])
-            file.write(line + "\n")
+            file.write(str(len(vehicle.rides_started)) + " " + " ".join(str(x) for x in vehicle.rides_started) + "\n")
 
 def generateVehicles(numvehicles):
     vehicles = []
